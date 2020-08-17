@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Set;
 
@@ -185,7 +186,33 @@ public class PageBase {
                 .perform();
     }
 
-    public String xPathArticleName(String article){
-        return "//*[@text='" + article +"']";
+
+
+    public void swipeLeft(int y) {
+        AppiumDriver appDriver = (AppiumDriver)(driver);
+        TouchAction action = new TouchAction(appDriver);
+        Dimension size = driver.manage().window().getSize();
+        int x1 = (int)(size.width*0.8);
+        int x2 = (int)(size.width*0.2);
+        action.press(PointOption.point(x1,y))
+                .waitAction()
+                .moveTo(PointOption.point(x2,y))
+                .release()
+                .perform();
+    }
+
+    public void rotateScreenLandscape() {
+        AppiumDriver appDriver = (AppiumDriver)(driver);
+        appDriver.rotate(ScreenOrientation.LANDSCAPE);
+    }
+    public void rotateScreenPORTRAIT() {
+        AppiumDriver appDriver = (AppiumDriver)(driver);
+        appDriver.rotate(ScreenOrientation.PORTRAIT);
+    }
+
+    public void runBackGround(int sec){
+        AppiumDriver appDriver = (AppiumDriver)(driver);
+        appDriver.runAppInBackground(Duration.ofSeconds(sec));
     }
 }
+

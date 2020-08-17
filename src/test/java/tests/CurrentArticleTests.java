@@ -42,7 +42,7 @@ public class CurrentArticleTests extends TestBase {
     }
 
     @Test
-    public void addToNewReadingListAndRemoveUsingSwipe()  {
+    public void addToNewReadingListAndDelete()  {
         String search = "Selenium";
         String article = "Selenium (software)";
         searchPage.enterSearchText(search)
@@ -54,14 +54,13 @@ public class CurrentArticleTests extends TestBase {
                 .openMyListsPage();
         myListsPage.waitUntilPageIsLoaded()
                 .openList("List IT");
+        myCurrentList.waitUntilPageIsLoaded()
+                .deleteArticle(article)
+                .closeReadingList();
+        myListsPage.waitUntilPageIsLoaded()
+                .openList("List IT");
         myCurrentList.waitUntilPageIsLoaded();
-        if (myCurrentList.existsArticle(article)){
-            myCurrentList.removeArticleFromListUsingSwipe(article)
-                    .closeList();
-            myListsPage.waitUntilPageIsLoaded()
-                    .openList("List IT");
-            myCurrentList.waitUntilPageIsLoaded();
-            Assert.assertFalse(myCurrentList.existsArticle(article));
-        }
+        Assert.assertFalse(myCurrentList.existsArticle(article));
+
     }
 }

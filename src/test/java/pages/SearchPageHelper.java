@@ -56,8 +56,21 @@ public class SearchPageHelper extends PageBase {
     }
 
     public SearchPageHelper openArticle(String article) {
-        driver.findElement(By.xpath(xPathArticleName(article))).click();
+    // WebElement resultSearchArticle = driver.findElement(By.xpath(xPathArticleName(article)));
+        for(WebElement element: articlesNamesList){
+            if(element.getText().equals(article)){
+                element.click();
+                break;
+            } else {
+                driver.findElement(By.xpath(xPathArticleName(article))).click();
+                break;
+            }
+        }
         return this;
+    }
+
+    public String xPathArticleName(String article){
+        return "//*[@text='" + article +"']";
     }
 
     public SearchPageHelper openMyListsPage() {
